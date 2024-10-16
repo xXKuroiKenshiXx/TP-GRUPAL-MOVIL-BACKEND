@@ -1,0 +1,1 @@
+"# TP-GRUPAL-MOVIL-BACKEND"  initgit add README.mdgit commit -m "first commit"git branch -M maingit remote add origin git@github.com:xXKuroiKenshiXx/TP-GRUPAL-MOVIL-BACKEND.gitgit push -u origin main
