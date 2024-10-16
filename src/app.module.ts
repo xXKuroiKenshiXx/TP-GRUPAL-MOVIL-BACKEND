@@ -1,40 +1,31 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { UsuariosService } from './services/usuarios.service';
-import { UsuariosController } from './controllers/usuarios.controller';
-import { Usuario } from './entities/usuario.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from './controllers/auth.controller';
-import { AuthService } from './services/auth.service';
-
-
-require('dotenv').config()
-
-const CONFIG_DB: TypeOrmModuleOptions = {
-  type: 'mysql',
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  autoLoadEntities: true,
-  synchronize: false,
-};
-
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(CONFIG_DB),
-    TypeOrmModule.forFeature([Usuario]),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'username',
+      password: 'password',
+      database: 'desarrollo_movil',
+      autoLoadEntities: true,
+      synchronize: false,
+      logger: 'advanced-console'
+    }),
+    AuthModule,
     JwtModule.register({
       global: true,
-      secret: 'movilsecret',
+      secret: 'utn',
       signOptions: {
-        expiresIn: '1d',
+        expiresIn: '24h'
       },
     }),
   ],
-  controllers: [UsuariosController, AuthController],
-  providers: [UsuariosService,AuthService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule { }
