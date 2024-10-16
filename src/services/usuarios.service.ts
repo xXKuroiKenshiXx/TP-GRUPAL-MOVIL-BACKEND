@@ -21,7 +21,7 @@ export class UsuariosService implements ICollection {
   async create(usuarioDto: crearUsuarioDto) {
     try {
       const usuarios = await this.userRepository.find();
-      const yaExiste = usuarios.find((u) => u.email === usuarioDto.email);
+      const yaExiste = usuarios.find((u) => u.gmail === usuarioDto.gmail);
       if (!yaExiste) {
         // Hashear la contraseña antes de guardarla
         const hashedPassword = await bcrypt.hash(usuarioDto.clave, 10);
@@ -30,7 +30,7 @@ export class UsuariosService implements ICollection {
         usuario.estado = usuario.estado ? usuario.estado : EstadosUsuarioEnum.ACTIVO
         usuario.rol = usuario.rol ? usuario.rol : RolesEnum.USUARIO
         usuario.clave = hashedPassword
-
+        
         const usuarioEntity: DeepPartial<Usuario> = usuario;
 
         const nuevoUsuario = this.userRepository.create(usuarioEntity);
@@ -111,5 +111,18 @@ export class UsuariosService implements ICollection {
     });
     return usuario;
   }
+
+  async getByEmail(email: string): Promise <Usuario>{
+
+    const usuario: Usuario = await this.userRepository.findOne({
+      where: {
+          gmail: email,
+          estado: EstadosUsuarioEnum.ACTIVO
+      },
+    });
+    return usuario;
+  }
+
+
 }
 

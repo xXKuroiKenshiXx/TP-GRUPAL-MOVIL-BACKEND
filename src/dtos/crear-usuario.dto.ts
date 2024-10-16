@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class crearUsuarioDto {
   @IsEmail()
-  email: string;
+  gmail: string;
 
   @IsNotEmpty()
   clave: string;

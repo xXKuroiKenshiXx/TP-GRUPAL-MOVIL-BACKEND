@@ -9,7 +9,7 @@ export class Usuario {
   id: number;
 
   @Column({ name: 'email' }) 
-  email: string;
+  gmail: string;
 
   @Exclude()
   @Column()

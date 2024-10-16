@@ -6,7 +6,7 @@ import { Usuario } from './entities/usuario.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
-import { MailService } from './services/mail.service';
+
 
 require('dotenv').config()
 
@@ -35,6 +35,6 @@ const CONFIG_DB: TypeOrmModuleOptions = {
     }),
   ],
   controllers: [UsuariosController, AuthController],
-  providers: [UsuariosService,AuthService, MailService],
+  providers: [UsuariosService,AuthService],
 })
 export class AppModule { }
