@@ -33,8 +33,8 @@ export class UsuariosController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  @Get('buscarPorEmail')
+  //@UseGuards(AuthGuard)
+  // * Authguard comentado para permitir crear usuarios al registrarse
   async obtenerUsuarioPorEmail(@Query('email') email: string): Promise<Usuario> {
     return await this.usuariosService.obtenerUsuarioPorEmail(email);
   }
