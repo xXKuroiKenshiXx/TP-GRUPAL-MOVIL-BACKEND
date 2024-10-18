@@ -14,7 +14,7 @@ export class AuthService {
         private jwtService: JwtService) {
     }
 
-    async login(loginDto: LoginDto): Promise<{ token: string }> {
+    async login(loginDto: LoginDto): Promise<{ token: string, idUsuario: number }> {
         const usuario: Usuario = await this.usuariosService.obtenerUsuarioPorEmail(loginDto.email);
 
         if (!usuario) {
@@ -35,7 +35,12 @@ export class AuthService {
             rol: usuario.rol,
         });
 
-        return { token };
+        const idUsuario = usuario.idUsuario;
+
+        return {
+            token,
+            idUsuario
+        };
     }
 
     async verifyToken(idToken: string) {

@@ -47,7 +47,8 @@ export class UsuariosController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
+  // * Authguard comentado para permitir crear usuarios al registrarse
   @Post()
   async crearUsuario(@Body() crearUsuarioDto: CrearUsuarioDto): Promise<Usuario> {
     return await this.usuariosService.crearUsuario(crearUsuarioDto);
