@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Delete, Post, Put, Query, UseGuards, Param } from '@nestjs/common';
+import { Body, Controller, Get, Delete, Post, Put, Query, UseGuards, Param, ParseIntPipe } from '@nestjs/common';
 import { UsuariosService } from '../services/usuarios.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '../guards/auth.guards';
@@ -34,7 +34,7 @@ export class UsuariosController {
 
   @ApiBearerAuth()
   //@UseGuards(AuthGuard)
-  // * Authguard comentado para permitir crear usuarios al registrarse
+  @Get('buscarPorEmail')
   async obtenerUsuarioPorEmail(@Query('email') email: string): Promise<Usuario> {
     return await this.usuariosService.obtenerUsuarioPorEmail(email);
   }
@@ -57,9 +57,8 @@ export class UsuariosController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Put('modificarUsuario/:id')
-  async modificarUsuario(@Param('id') id: string, @Body() modificarUsuarioDto: ModificarUsuarioDto): Promise<Usuario> {
-    const idNumber = parseInt(id, 10);
-    return await this.usuariosService.modificarUsuario(idNumber, modificarUsuarioDto);
+  async modificarUsuario(@Param('id', ParseIntPipe) id: number, @Body() modificarUsuarioDto: ModificarUsuarioDto): Promise<Usuario> {
+    return await this.usuariosService.modificarUsuario(id, modificarUsuarioDto);
   }
 
   @ApiBearerAuth()
