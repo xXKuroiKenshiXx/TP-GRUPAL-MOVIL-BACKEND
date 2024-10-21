@@ -113,29 +113,24 @@ export class UsuariosService {
       usuario.username = modificarUsuarioDto.username;
     }
 
-    if (modificarUsuarioDto.password !== undefined) {
+    if (modificarUsuarioDto.password !== undefined && String(modificarUsuarioDto.password).length > 0) {
       usuario.password = await bcrypt.hash(modificarUsuarioDto.password, 10);
-    }
-
-    if (modificarUsuarioDto.nombre !== undefined) {
-      usuario.nombre = modificarUsuarioDto.nombre;
     }
 
     if (modificarUsuarioDto.email !== undefined) {
       usuario.email = modificarUsuarioDto.email;
     }
 
-    if (modificarUsuarioDto.imagen !== undefined) {
+    if (modificarUsuarioDto.imagen !== undefined && String(modificarUsuarioDto.imagen).length > 0) {
       usuario.imagen = modificarUsuarioDto.imagen;
     }
 
-    if (modificarUsuarioDto.bio !== undefined) {
-      usuario.bio = modificarUsuarioDto.bio;
-    }
-
-    if (modificarUsuarioDto.rol !== undefined) {
+    if (modificarUsuarioDto.rol !== undefined && String(modificarUsuarioDto.rol).length > 0) {
       usuario.rol = modificarUsuarioDto.rol;
     }
+
+    usuario.nombre = modificarUsuarioDto.nombre;
+    usuario.bio = modificarUsuarioDto.bio;
 
     await this.usuariosRepo.save(usuario);
 

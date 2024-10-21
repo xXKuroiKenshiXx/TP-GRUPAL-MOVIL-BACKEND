@@ -4,6 +4,7 @@ import { ValidationPipe, ClassSerializerInterceptor } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from '@algoan/nestjs-http-exception-filter';
 import * as cors from 'cors';
+import * as express from 'express';
 
 
 async function bootstrap() {
@@ -18,6 +19,7 @@ async function bootstrap() {
   app.use(cors({
     origin: 'http://localhost:4200',
   }));
+  app.use(express.json({ limit: '1mb' }));
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(
